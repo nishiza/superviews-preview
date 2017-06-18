@@ -1,0 +1,53 @@
+{
+    "name": "superviews-preview",
+    "displayName": "superviews-preview",
+    "description": "preview a superviews.js result.",
+    "version": "0.0.1",
+    "publisher": "nishiza",
+    "engines": {
+        "vscode": "^1.13.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.showSuperviewsPreview"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.showSuperviewsPreview",
+                "title": "Superviews.js: Open Preview"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Superviews.js configuration",
+            "properties": {
+                "superviews.mode": {
+                    "type": "string",
+                    "default": "cjs",
+                    "description": "same as api's last argument. (see https://github.com/davidjamesstone/superviews.js#api)"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "tsc -p ./",
+        "compile": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.32",
+        "@types/node": "^6.0.40",
+        "mocha": "^2.3.3",
+        "typescript": "^2.0.3",
+        "vscode": "^1.0.0"
+    },
+    "dependencies": {
+        "sanitize-html": "^1.14.1",
+        "superviews.js": "^3.0.4"
+    }
+}
