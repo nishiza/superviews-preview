@@ -2,7 +2,7 @@
     "name": "superviews-preview",
     "displayName": "superviews-preview",
     "description": "preview a superviews.js result.",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publisher": "nishiza",
     "engines": {
         "vscode": "^1.30.0"
@@ -11,7 +11,8 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.showSuperviewsPreview"
+        "onCommand:extension.showSuperviewsPreview",
+        "onCommand:extension.showSuperviewsPreviewInEditor"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -19,6 +20,10 @@
             {
                 "command": "extension.showSuperviewsPreview",
                 "title": "Superviews.js: Open Preview"
+            },
+            {
+                "command": "extension.showSuperviewsPreviewInEditor",
+                "title": "Superviews.js: Open Preview in Editor"
             }
         ],
         "configuration": {
