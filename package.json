@@ -2,10 +2,10 @@
     "name": "superviews-preview",
     "displayName": "superviews-preview",
     "description": "preview a superviews.js result.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "nishiza",
     "engines": {
-        "vscode": "^1.13.0"
+        "vscode": "^1.30.0"
     },
     "categories": [
         "Other"
@@ -40,14 +40,15 @@
         "test": "node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "@types/mocha": "^2.2.32",
-        "@types/node": "^6.0.40",
-        "mocha": "^2.3.3",
-        "typescript": "^2.0.3",
-        "vscode": "^1.0.0"
+        "@types/mocha": "^5.2.5",
+        "@types/node": "^10.12.19",
+        "@types/sanitize-html": "^1.18.2",
+        "mocha": "^5.2.0",
+        "typescript": "^3.2.4",
+        "vscode": "^1.1.28"
     },
     "dependencies": {
-        "sanitize-html": "^1.14.1",
+        "sanitize-html": "^1.20.0",
         "superviews.js": "^3.0.4"
     }
 }

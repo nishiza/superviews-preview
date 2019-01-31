@@ -8,53 +8,47 @@ import * as sanitize from 'sanitize-html';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+    const scheme = 'superviews-preview';
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "superviews-preview" is now active!');
+    const superview = async (source: vscode.Uri): Promise<string> => {
+                    const config = vscode.workspace.getConfiguration('superviews');
+                    const mode = config.get('mode');
+                    const document = await vscode.workspace.openTextDocument(source);
+                    const text = await document.getText();
+                    const result = superviews(text, undefined, undefined, mode);
+                    return `<pre><code>${sanitize(result, {  })}</code></pre>`;
+                };
 
-    class SuperviewsResultProvider implements vscode.TextDocumentContentProvider {
-        private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
-
-        get onDidChange(): vscode.Event<vscode.Uri> {
-			return this._onDidChange.event;
-		}
-
-        public update(uri: vscode.Uri) {
-			this._onDidChange.fire(uri);
-		}
-
-        public provideTextDocumentContent(uri: vscode.Uri, token: vscode.CancellationToken): vscode.ProviderResult<string> {
-            let editor = vscode.window.activeTextEditor;
-            if (!(editor.document.languageId === 'html')) {
-				return '<code>unsupported format.</code>'
-			}
-
-            let configuration = vscode.workspace.getConfiguration('superviews');
-            let mode = configuration.get('mode');
-            let result = superviews(editor.document.getText(), undefined, undefined, mode);
-            let escaped = sanitize(result);
-            return `<pre><code>${escaped}</code></pre>`;
+    const disposable = vscode.commands.registerCommand('extension.showSuperviewsPreview', async resource => {
+        const editor = vscode.window.activeTextEditor;
+        if (editor === undefined) {
+            return;
         }
-    }
 
-    let scheme = 'superviews-preview';
-    let previewUri = vscode.Uri.parse(`${scheme}://authority/superviews-preview`);
-    let provider = new SuperviewsResultProvider();
-	let registration = vscode.workspace.registerTextDocumentContentProvider(scheme, provider);
+        if (editor.document.languageId != 'html') {
+            return;
+        }
 
-    vscode.workspace.onDidChangeTextDocument((e: vscode.TextDocumentChangeEvent) => {
-		if (e.document === vscode.window.activeTextEditor.document) {
-			provider.update(previewUri);
-		}
-	});
+        const uri = resource instanceof vscode.Uri ? resource : editor.document.uri;
+        const viewColumn = editor.viewColumn;
+       
+        const panel = await vscode.window.createWebviewPanel(scheme, 'Superviews Preview', { viewColumn: viewColumn, preserveFocus: true });
 
-    let disposable = vscode.commands.registerCommand('extension.showSuperviewsPreview', () => {
-		return vscode.commands.executeCommand('vscode.previewHtml', previewUri, vscode.ViewColumn.Two, 'Superviews.js Preview').then((success) => {
-		}, (reason) => {
-			vscode.window.showErrorMessage(reason);
-		});
-	});
+        panel.webview.html = await superview(uri);
+
+        const d = vscode.workspace.onDidChangeTextDocument(async (e: vscode.TextDocumentChangeEvent) => {
+            if (e.document.uri == uri) {
+                panel.webview.html = await superview(uri)
+            }
+        });
+
+        panel.onDidDispose((e) => {
+            if (d) {
+                d.dispose();
+            }
+        }, null, context.subscriptions);
+
+    });
 
     context.subscriptions.push(disposable);
 }
@@ -62,3 +56,4 @@ export function activate(context: vscode.ExtensionContext) {
 // this method is called when your extension is deactivated
 export function deactivate() {
 }
+
