@@ -1,5 +1,5 @@
 declare module 'package.json' {
-  const value: { contribusions: Contributes };
+  const value: { contributes: Contributes };
   export default value;
 }
 
