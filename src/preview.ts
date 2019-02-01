@@ -1,3 +1,4 @@
+'use strict';
 import * as vscode from "vscode";
 import * as sanitize from "sanitize-html";
 import {scheme, title, superview} from "./global";

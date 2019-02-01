@@ -1,3 +1,4 @@
+'use strict';
 import * as vscode from "vscode";
 import {scheme, superview} from "./global";
 import * as packageInfo from "../package.json";
