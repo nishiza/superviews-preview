@@ -1,9 +1,10 @@
 import * as vscode from "vscode";
-import {scheme, title, superview} from "./global";
+import {scheme, superview} from "./global";
+import * as packageInfo from "../package.json";
 
 export class PreviewInEditor {
     static get id(): string {
-        return 'extension.showSuperviewsPreviewInEditor';
+        return packageInfo.contributes.commands.find(command => command.id === PreviewInEditor.name).command;
     }
 
     static makeCommandHandler(context: vscode.ExtensionContext): (...args: any[]) => any {

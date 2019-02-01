@@ -11,17 +11,18 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.showSuperviewsPreview",
-        "onCommand:extension.showSuperviewsPreviewInEditor"
+        "onLanguage:html"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
             {
+                "id": "Preview",
                 "command": "extension.showSuperviewsPreview",
                 "title": "Superviews.js: Open Preview"
             },
             {
+                "id": "PreviewInEditor",
                 "command": "extension.showSuperviewsPreviewInEditor",
                 "title": "Superviews.js: Open Preview in Editor"
             }

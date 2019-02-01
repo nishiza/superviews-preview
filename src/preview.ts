@@ -1,10 +1,11 @@
 import * as vscode from "vscode";
 import * as sanitize from "sanitize-html";
 import {scheme, title, superview} from "./global";
+import * as packageInfo from "../package.json";
 
 export class Preview {
     static get id(): string {
-        return 'extension.showSuperviewsPreview';
+        return packageInfo.contributes.commands.find(command => command.id === Preview.name).command;
     }
 
     static makeCommandHandler(context: vscode.ExtensionContext): (...args: any[]) => any {
