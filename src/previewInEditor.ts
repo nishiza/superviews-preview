@@ -59,6 +59,7 @@ export class PreviewInEditor {
 
             vscode.workspace.onDidCloseTextDocument(async (e) => {
                 if (e.uri == uri) {
+                    // vscode.window.closeTextDocument(document);
                 }
             });
         }
