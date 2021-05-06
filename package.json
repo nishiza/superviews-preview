@@ -54,7 +54,7 @@
         "vscode": "^1.1.28"
     },
     "dependencies": {
-        "sanitize-html": "^1.20.0",
+        "sanitize-html": "^2.3.2",
         "superviews.js": "^3.0.4"
     }
 }
