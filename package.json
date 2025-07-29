@@ -51,7 +51,7 @@
         "@types/sanitize-html": "^1.18.2",
         "mocha": "^5.2.0",
         "typescript": "^3.2.4",
-        "vscode": "^1.1.28"
+        "vscode": "^1.1.37"
     },
     "dependencies": {
         "sanitize-html": "^2.12.1",
